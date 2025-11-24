@@ -1,0 +1,96 @@
+﻿<Window x:Class="TodoListApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="AliceBlue"
+        Title="Todo List" Height="450" Width="600">
+
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Calendar -->
+        <Border CornerRadius="0" Padding="0">
+            <Calendar x:Name="TodoCalendar"
+              SelectedDatesChanged="Calendar_SelectedDatesChanged"
+              DisplayDateStart="2020-01-01"
+              DisplayDateEnd="2030-12-31"
+              Background="Honeydew">
+            </Calendar>
+        </Border>
+        <Border Grid.Row="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="10"
+                Background="LightBlue"
+                CornerRadius="8">
+            <Button Content="Add Task"
+                    Width="75"
+                    Height="30"
+                    Click="AddTaskButtonPopUp_Click"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="5"/>
+        </Border>
+        <Border Grid.Row="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Background="LightBlue"
+                CornerRadius="8">
+            <Button Content="Home"
+                    Width="75"
+                    Height="30"
+                    Click="ReturnHome_Click"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="5"/>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="10"  Margin="10, 10, 0, 10">
+                <ListBox x:Name="TodoListBox"
+                 SelectionChanged="TodoListBox_SelectionChanged"
+                 ItemsSource="{Binding}"
+                 Background="Honeydew"
+                 Grid.Row="1" Grid.Column="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="5" LastChildFill="False">
+                                
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left" TextWrapping="Wrap"/>
+
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                    <Button Content="Edit" Margin="5,0" Click="EditTask_Click"/>
+                                    <Button Content="Delete" Margin="5,0" Click="DeleteTask_Click"/>
+                                </StackPanel>
+                                
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <Border CornerRadius="10" Grid.Row="1" Grid.Column="1" Margin="0, 10, 10, 10">
+                <ListBox x:Name="TodoListDescription" Background="Honeydew" Grid.Row="1" Grid.Column="1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="{Binding Description}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Deadline, StringFormat='Due: {0:d}'}"/>
+                                <TextBlock Text="{Binding Priority, StringFormat='Priority: {0}'}"/>
+                                <TextBlock Text="{Binding Completion, StringFormat='Completed: {0}'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
